@@ -4,13 +4,17 @@ const crawl = {
   baseUrl: 'https://truyenfull.vn/',
 
   async _getDoc(path: string) {
-    const res = await fetch(this.baseUrl + path, { mode: 'no-cors' });
+    try {
+      const res = await fetch(this.baseUrl + path, { mode: 'no-cors' });
+      // if (!res.ok) return null;
 
-    if (!res.ok) return null;
+      const html = await res.text();
 
-    const html = await res.text();
-
-    return cheerio.load(html);
+      return cheerio.load(html);
+    } catch (error) {
+      console.log('ERROR _getDoc:', error);
+      return null;
+    }
   },
 
   async gen(path: string, page = '1') {
@@ -38,33 +42,39 @@ const crawl = {
         });
       }
 
-      return { novelList: novelList, next: next, current };
+      return { novelList: novelList, isNext: !!next, current };
     }
 
     return null;
   },
 
-  async search(key: string, page = 1) {
-    const $ = await this._getDoc(
-      `https://truyenfull.vn/tim-kiem/?tukhoa=${key}&page=${page}`,
-    );
+  async search(key: string, page = '1') {
+    const $ = await this._getDoc(`tim-kiem/?tukhoa=${key}&page=${page}`);
 
     if ($) {
       let el = $('.list-truyen div[itemscope]');
       let novelList = [];
       let next = $('.pagination > li.active + li').last().text();
+      const current = $('.pagination li.active').text().split(' ')[0];
       for (var i = 0; i < el.length; i++) {
+        const link = $(e)
+          .find('.truyen-title > a')
+          .first()
+          .attr('href')
+          ?.slice(22); //"https://truyenfull.vn/".length
+
         var e = el.get(i);
         novelList.push({
           name: $(e).find('.truyen-title > a').text(),
-          link: $(e).find('.truyen-title > a').first().attr('href'),
+          link: link,
           description: $(e).find('.author').text(),
           cover: $(e).find('[data-image]').attr('data-image'),
+          author: $(e).find('.author').text(),
           host: 'https://truyenfull.vn',
         });
       }
 
-      return { novelList, next };
+      return { novelList, current, isNext: !!next };
     }
 
     return null;

@@ -7,13 +7,19 @@ import ArrowRight from './icons/arrow-right';
 import ArrowLeft from './icons/arrow-left';
 import { cx } from '@/lib/utils';
 
-export default function Pagination({ current }: { current: string }) {
+export default function Pagination({
+  current,
+  q,
+  isNext,
+}: {
+  current: string;
+  q?: string;
+  isNext?: boolean;
+}) {
   const [inputValue, setInputValue] = useState<string>(current);
   const router = useRouter();
   let next = +current + 1;
   let prev = +current - 1;
-
-  console.log('current page', current);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -35,7 +41,7 @@ export default function Pagination({ current }: { current: string }) {
     <div className="mt-8 flex justify-center">
       <div className="flex w-max items-center gap-2">
         <Link
-          className={cx(current === '1' && 'pointer-events-none')}
+          className={cx((current === '1' || !current) && 'pointer-events-none')}
           href={`?page=${prev}`}
           aria-disabled={true}
         >
@@ -51,7 +57,10 @@ export default function Pagination({ current }: { current: string }) {
             onChange={handleInputChange}
           />
         </form>
-        <Link href={`?page=${next}`}>
+        <Link
+          className={cx(!isNext && 'pointer-events-none')}
+          href={q ? `?q=${q}&page=${next}` : `?page=${next}`}
+        >
           <ArrowRight className="h-8 w-8" />
         </Link>
       </div>
