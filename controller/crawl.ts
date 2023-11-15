@@ -23,7 +23,7 @@ const crawl = {
     if ($) {
       const el = $('.list-truyen div[itemscope]');
       const novelList = [];
-      const next = $('.pagination a').first().text();
+      const next = $('.pagination li.active + li').text();
       const current = $('.pagination li.active').text().split(' ')[0];
       for (let i = 0; i < el.length; i++) {
         const e = el[i];
@@ -42,7 +42,7 @@ const crawl = {
         });
       }
 
-      return { novelList: novelList, isNext: !!next, current };
+      return { novelList: novelList, isNext: !!next, current, next };
     }
 
     return null;
@@ -50,20 +50,16 @@ const crawl = {
 
   async search(key: string, page = '1') {
     const $ = await this._getDoc(`tim-kiem/?tukhoa=${key}&page=${page}`);
+    console.log('search', `tim-kiem/?tukhoa=${key}&page=${page}`);
 
     if ($) {
       let el = $('.list-truyen div[itemscope]');
       let novelList = [];
-      let next = $('.pagination > li.active + li').last().text();
+      let next = $('.pagination li.active + li').text();
       const current = $('.pagination li.active').text().split(' ')[0];
       for (var i = 0; i < el.length; i++) {
-        const link = $(e)
-          .find('.truyen-title > a')
-          .first()
-          .attr('href')
-          ?.slice(22); //"https://truyenfull.vn/".length
-
         var e = el.get(i);
+        const link = $(e).find('.truyen-title > a').attr('href')?.slice(22); //"https://truyenfull.vn/".length
         novelList.push({
           name: $(e).find('.truyen-title > a').text(),
           link: link,
@@ -98,20 +94,22 @@ const crawl = {
     return null;
   },
 
-  async getChapsUrl(path: string) {
-    const $ = await this._getDoc(path);
+  async getChapsUrl(path: string, page = '1') {
+    const $ = await this._getDoc(`${path}/trang-${page}`);
 
     if (!$) return null;
+    const url = `${path}/trang-${page}`;
 
     const chapsUrls = [];
     const cl = $('.list-chapter > li');
+    console.log('server run', cl.length, url);
 
     for (let i = 0; i < cl.length; i++) {
       const c = cl[i];
 
       chapsUrls.push({
         name: $(c).find('a').text(),
-        input: $(c).find('a').attr('href'),
+        input: $(c).find('a').attr('href')?.slice(22),
       });
     }
 

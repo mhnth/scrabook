@@ -38,11 +38,13 @@ export default function Pagination({
   }, [current]);
 
   return (
-    <div className="mt-8 flex justify-center">
+    <div className="fixed bottom-0 mt-8 flex w-full justify-center bg-[#252c33] bg-opacity-25">
       <div className="flex w-max items-center gap-2">
         <Link
-          className={cx((current === '1' || !current) && 'pointer-events-none')}
-          href={`?page=${prev}`}
+          className={cx(
+            (current === '1' || !current) && 'pointer-events-none opacity-50',
+          )}
+          href={q ? `?q=${q}&page=${prev}` : `?page=${prev}`}
           aria-disabled={true}
         >
           <ArrowLeft className="h-8 w-8" />
@@ -58,7 +60,7 @@ export default function Pagination({
           />
         </form>
         <Link
-          className={cx(!isNext && 'pointer-events-none')}
+          className={cx(!isNext && 'pointer-events-none opacity-50')}
           href={q ? `?q=${q}&page=${next}` : `?page=${next}`}
         >
           <ArrowRight className="h-8 w-8" />

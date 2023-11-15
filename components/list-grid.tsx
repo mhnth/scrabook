@@ -1,4 +1,3 @@
-import { home } from '@/constants/home';
 import Link from 'next/link';
 import React from 'react';
 
@@ -17,7 +16,7 @@ interface ListGridProps extends NovelData {}
 export const ListGrid: React.FC<ListGridProps> = ({ novelList }) => {
   return (
     <>
-      <div className="list page-w grid gap-1 md:grid-cols-2 md:px-8">
+      <div className="list page-w mb-12 grid gap-1 md:grid-cols-2 md:gap-4 md:px-8">
         {novelList.map((n, i) => {
           return (
             <div
@@ -33,10 +32,12 @@ export const ListGrid: React.FC<ListGridProps> = ({ novelList }) => {
                   />
                 </div>
               </Link>
-              <div className="ml-2 w-4/5">
+              <div className="ml-2">
                 <Link href={`/${n.link}`}>
-                  <h4 className="w-max font-semibold">{n.name}</h4>
-                  <span>{n.author}</span>
+                  <div className="text-sm font-semibold md:text-base">
+                    {n.name}
+                  </div>
+                  <span className="text-sm opacity-80">{n.author}</span>
                 </Link>
               </div>
             </div>

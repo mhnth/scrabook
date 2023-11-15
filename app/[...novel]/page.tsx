@@ -1,6 +1,15 @@
 import NovelDesc from '@/components/novel-desc';
 import NullPage from '@/components/null-page';
 import crawl from '@/controller/crawl';
+import { cx } from '@/lib/utils';
+import Link from 'next/link';
+import { cache } from 'react';
+
+const getInfo = cache(async (path: string) => {
+  const info = await crawl.getInfo(path);
+
+  return info;
+});
 
 export default async function Page({
   params,
@@ -9,29 +18,100 @@ export default async function Page({
   params: { novel: string };
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const novel = await crawl.getInfo(params.novel);
+  const novel = await getInfo(params.novel)!;
+  const listChapter = await crawl.getChapsUrl(
+    params.novel,
+    (searchParams.listChapter_page as string) || '1',
+  );
 
-  if (novel)
+  const colListChapter = listChapter!.length > 25 ? [0, 1] : [1];
+  const half = (listChapter && Math.ceil(listChapter.length / 2)) || 1;
+
+  if (novel && listChapter)
     return (
       <>
-        <div>
+        <div className="page-w mx-auto px-2 md:mt-12">
           <div className="n-info">
-            <div className="n-name font-semibold dark:text-slate-300">
+            <h2 className="n-name font-semibold dark:text-slate-300">
               {novel.name}
-            </div>
+            </h2>
             <div className="n-cover">
               <img className="rounded-md" src={novel.cover} alt="" />
             </div>
-            <div className="n-details ml-4 flex justify-center text-sm leading-8">
+            <div className="n-details ml-4 flex text-sm leading-8 md:ml-0">
               <div
                 dangerouslySetInnerHTML={{
                   __html: novel.details || '<p>mô trả trống</p>',
                 }}
               />
             </div>
-            <div className="n-toolbar flex justify-center">toobar</div>
+            <div className="n-toolbar flex justify-center gap-2 text-sm font-semibold md:justify-start">
+              <span>
+                <a href="#">Đọc ngay</a>
+              </span>
+              <span>
+                <a href="#list-chapter">Chương</a>
+              </span>
+              <span>Đánh dấu</span>
+            </div>
           </div>
+
           <NovelDesc html={novel.description!} />
+
+          <h3 id="list-chapter" className="mt-8">
+            Danh sách chương
+          </h3>
+          <div
+            id="list-chapter2"
+            className="list-chapter grid gap-x-4 md:grid-cols-2"
+          >
+            {colListChapter.map((a, i) => {
+              let _i = i;
+
+              const slice = _i === 0 ? [0, half] : [half];
+
+              return (
+                <ul
+                  key={i}
+                  className={cx(i === 1 && '[&>*:last-child]:border-0')}
+                >
+                  {listChapter.slice(...slice).map((c, y) => {
+                    return (
+                      <li
+                        key={y}
+                        className="border-b border-slate-700 pb-2 pt-2 font-light"
+                      >
+                        <Link className="" href={``}>
+                          {c.name}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              );
+            })}
+          </div>
+
+          {/* pagination list page */}
+          <div className="num-page mt-8 flex flex-wrap justify-center">
+            {Array.from({ length: +novel.total_page! }, (_, i) => {
+              return (
+                <Link
+                  key={i}
+                  className={cx(
+                    'border border-slate-700 px-3 py-1',
+                    i + 1 === +searchParams.listChapter_page! &&
+                      'bg-slate-300 text-gray-900',
+                  )}
+                  href={`${params.novel}?listChapter_page=${
+                    i + 1
+                  }#list-chapter`}
+                >
+                  {i + 1}
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </>
     );

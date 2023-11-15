@@ -21,6 +21,7 @@ export default function RootLayout({
           </header>
           {children}
         </div>
+        <footer className="mt-8"></footer>
       </body>
     </html>
   );
