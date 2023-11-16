@@ -94,7 +94,9 @@ const crawl = {
   },
 
   async getChapsUrl(path: string, page = '1') {
-    const $ = await this._getDoc(`${path}/trang-${page}`);
+    const $ = await this._getDoc(
+      page === '1' ? `${path}` : `${path}/trang-${page}`,
+    );
 
     if (!$) return null;
     const url = `${path}/trang-${page}`;
