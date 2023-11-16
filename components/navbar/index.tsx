@@ -16,7 +16,12 @@ export default function Navbar() {
           className="flex items-center gap-2 font-semibold text-slate-300"
           href={'/'}
         >
-          <img className="w-8 md:w-10" src={Logo.src} alt="logo" />
+          <img
+            loading="lazy"
+            className="w-8 md:w-10"
+            src={Logo.src}
+            alt="logo"
+          />
           <span className="hidden md:block">Scrabook</span>
         </Link>
       </div>

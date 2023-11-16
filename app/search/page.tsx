@@ -13,7 +13,7 @@ export default async function SearchPage({
   const data = await crawl.search(q as string, (page as string) || '1');
   if (data)
     return (
-      <main className="mt-10 flex min-h-screen flex-col items-center justify-between px-2">
+      <main className="mt-10 flex min-h-screen flex-col items-center px-2">
         <div className="page-w mt-2 text-lg md:ml-12">{`Kết quả với '${q}'`}</div>
         <ListGrid novelList={data.novelList} />
         <Pagination

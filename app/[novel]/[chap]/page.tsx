@@ -45,7 +45,7 @@ export default async function Page({
         </div>
 
         <div
-          className="mt-4 leading-8 md:leading-10"
+          className="mt-4 leading-8 md:text-lg md:leading-10"
           dangerouslySetInnerHTML={{ __html: data.text! }}
         />
 

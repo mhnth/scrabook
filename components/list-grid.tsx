@@ -29,6 +29,7 @@ export const ListGrid: React.FC<ListGridProps> = ({ novelList }) => {
                     className="h-full w-full rounded-md object-cover"
                     src={n.cover}
                     alt={n.name}
+                    loading="lazy"
                   />
                 </div>
               </Link>

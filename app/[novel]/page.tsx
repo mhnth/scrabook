@@ -30,13 +30,18 @@ export default async function Page({
   if (novel && listChapter)
     return (
       <>
-        <div className="page-w mx-auto px-2 md:mt-12">
+        <div className="page-w mx-auto mt-4 px-2 md:mt-12">
           <div className="n-info">
             <h2 className="n-name font-semibold text-gray-700 dark:text-slate-300">
               {novel.name}
             </h2>
             <div className="n-cover">
-              <img className="rounded-md" src={novel.cover} alt="" />
+              <img
+                loading="lazy"
+                className="rounded-md"
+                src={novel.cover}
+                alt=""
+              />
             </div>
             <div className="n-details ml-4 flex text-sm leading-8 md:ml-0">
               <div
