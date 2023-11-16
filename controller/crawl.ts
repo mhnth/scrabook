@@ -50,7 +50,6 @@ const crawl = {
 
   async search(key: string, page = '1') {
     const $ = await this._getDoc(`tim-kiem/?tukhoa=${key}&page=${page}`);
-    console.log('search', `tim-kiem/?tukhoa=${key}&page=${page}`);
 
     if ($) {
       let el = $('.list-truyen div[itemscope]');
@@ -102,7 +101,6 @@ const crawl = {
 
     const chapsUrls = [];
     const cl = $('.list-chapter > li');
-    console.log('server run', cl.length, url);
 
     for (let i = 0; i < cl.length; i++) {
       const c = cl[i];
@@ -129,9 +127,10 @@ const crawl = {
       $('div.ads-responsive')?.remove();
       $('[style=font-size.0px;]').remove();
       $('a').remove();
+      $('div.chapter-c > br:last-child + p').remove();
 
       let txt = $('div.chapter-c');
-      txt.find('p').last().remove();
+      // txt.find('p').last().remove();
       let text = txt
         .html()
         ?.replace('<em>.*?Chương này có nội dung ảnh.*?</em>', '</?em>');

@@ -23,7 +23,7 @@ export default async function Page({
           {home.map((o, i) => {
             return (
               <Link
-                className="item-cat w-max rounded-md bg-slate-700 px-2 py-1 text-xs font-semibold"
+                className="item-cat w-max rounded-md bg-cyan-700 px-2 py-1 text-xs font-semibold text-[#f0f0f0] dark:bg-slate-700"
                 href={`/${o.input}`}
                 key={i}
               >
@@ -33,7 +33,9 @@ export default async function Page({
             );
           })}
         </div>
-        <div className="page-w mt-2 text-lg md:ml-12">{option?.title}</div>
+        <div className="page-w mt-2 text-lg text-gray-800 md:ml-12">
+          {option?.title}
+        </div>
         <ListGrid novelList={data.novelList} />
         <Pagination current={data.current} isNext={data.isNext} />
       </main>

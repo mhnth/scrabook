@@ -35,6 +35,10 @@ body {
   width: 100%;
 }
 
+input {
+  @apply [appearance:textfield] dark:bg-gray-600 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none;
+}
+
 .page-w {
   width: 100%;
   max-width: 1024px;

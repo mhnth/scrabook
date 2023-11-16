@@ -10,7 +10,7 @@ export default function Navbar() {
   const [openSearchBar, setOpenSearchBar] = useState<boolean>(false);
 
   return (
-    <nav className="page-w relative mx-auto flex items-center justify-between border-b py-2 dark:border-slate-500">
+    <nav className="page-w relative mx-auto flex items-center justify-between py-1 dark:border-b dark:border-slate-500">
       <div className="w-max">
         <Link
           className="flex items-center gap-2 font-semibold text-slate-300"
@@ -20,8 +20,13 @@ export default function Navbar() {
           <span className="hidden md:block">Scrabook</span>
         </Link>
       </div>
-      <span onClick={() => setOpenSearchBar(!openSearchBar)}>
-        <ISearch className="cursor-pointer" />
+      <span
+        className="search-icon cursor-pointer"
+        onClick={(e) => {
+          setOpenSearchBar(!openSearchBar);
+        }}
+      >
+        <ISearch className="search-icon" />
       </span>
       {openSearchBar && <Search setOpenSearchBar={setOpenSearchBar} />}
     </nav>

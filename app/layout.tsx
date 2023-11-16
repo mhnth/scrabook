@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div id="scrab-app">
-          <header className="sticky top-0 w-full bg-[#252c33]">
+          <header className="sticky top-0 z-10 w-full bg-sky-900 px-2 dark:bg-[#252c33]">
             <Navbar />
           </header>
           {children}

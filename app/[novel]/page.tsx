@@ -32,7 +32,7 @@ export default async function Page({
       <>
         <div className="page-w mx-auto px-2 md:mt-12">
           <div className="n-info">
-            <h2 className="n-name font-semibold dark:text-slate-300">
+            <h2 className="n-name font-semibold text-gray-700 dark:text-slate-300">
               {novel.name}
             </h2>
             <div className="n-cover">
@@ -79,9 +79,9 @@ export default async function Page({
                     return (
                       <li
                         key={y}
-                        className="border-b border-slate-700 pb-2 pt-2 font-light"
+                        className="border-b pb-2 pt-2 text-gray-700 dark:border-slate-700 dark:font-light dark:text-gray-300"
                       >
-                        <Link className="" href={``}>
+                        <Link className="" href={`${c.input}`}>
                           {c.name}
                         </Link>
                       </li>
@@ -93,7 +93,7 @@ export default async function Page({
           </div>
 
           {/* pagination list page */}
-          <div className="num-page mt-8 flex flex-wrap justify-center">
+          <div className="num-page mt-8 flex flex-wrap justify-center gap-1">
             {Array.from({ length: +novel.total_page! }, (_, i) => {
               return (
                 <Link

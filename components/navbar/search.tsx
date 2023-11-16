@@ -4,9 +4,10 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 
 export default function Search({
-  setOpenSearchBar,
+  setOpenSearchBar, // openSearchBar,
 }: {
   setOpenSearchBar: Dispatch<SetStateAction<boolean>>;
+  // openSearchBar: boolean;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -23,6 +24,8 @@ export default function Search({
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent): void {
+      const clickedEvent = event.target as HTMLDivElement;
+      if (clickedEvent.classList.contains('search-icon')) return;
       if (
         searchRef.current &&
         !searchRef.current.contains(event.target as Node)

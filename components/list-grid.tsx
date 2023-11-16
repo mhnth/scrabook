@@ -16,11 +16,11 @@ interface ListGridProps extends NovelData {}
 export const ListGrid: React.FC<ListGridProps> = ({ novelList }) => {
   return (
     <>
-      <div className="list page-w mb-12 grid gap-1 md:grid-cols-2 md:gap-4 md:px-8">
+      <div className="list page-w mb-12 grid gap-1 text-gray-800 md:grid-cols-2 md:gap-4 md:px-8">
         {novelList.map((n, i) => {
           return (
             <div
-              className="flex w-full border-b border-slate-700 py-1 pb-4"
+              className="flex w-full border-b border-gray-300 py-1 pb-4 dark:border-slate-700 dark:text-gray-300"
               key={i}
             >
               <Link href={`/${n.link}`}>
