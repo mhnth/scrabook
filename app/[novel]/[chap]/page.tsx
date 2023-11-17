@@ -18,11 +18,13 @@ export default async function Page({
   if (data)
     return (
       <div className="chap-c page-w mx-auto px-2">
-        <div className="mt-4 flex text-sm font-semibold text-blue-900 dark:text-slate-300">
+        <div className="mt-8 flex flex-col items-center gap-3 text-sm font-semibold text-blue-900 dark:text-slate-300 md:mt-12">
           <Link href={'./'}>{data.name}</Link>
-          <ArrowRight />
+          {/* <ArrowRight /> */}
           {/* <span className="font-normal ">{'Chương ' + chap}</span> */}
-          <span className="font-normal ">{data.chapterTitle}</span>
+          <span className="text-xl font-light md:text-3xl">
+            {data.chapterTitle}
+          </span>
         </div>
         <div className="mt-8 flex justify-center gap-2">
           <Link
@@ -52,7 +54,7 @@ export default async function Page({
         </div>
 
         <div
-          className="mt-4 leading-8 md:text-lg md:leading-10"
+          className="mx-auto mt-4 max-w-2xl leading-8 md:text-lg md:leading-10"
           dangerouslySetInnerHTML={{ __html: data.text! }}
         />
 
