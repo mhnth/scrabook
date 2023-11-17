@@ -17,14 +17,17 @@ const crawl = {
     }
   },
 
-  async gen(path: string, page = '1') {
-    const $ = await this._getDoc(path + '/trang-' + page + '/');
+  async gen(path: string, page?: string) {
+    const pagination = page ? '/trang-' + page + '/' : '';
+
+    const $ = await this._getDoc(path + pagination);
 
     if ($) {
       const el = $('.list-truyen div[itemscope]');
       const novelList = [];
       const next = $('.pagination li.active + li').text();
       const current = $('.pagination li.active').text().split(' ')[0];
+
       for (let i = 0; i < el.length; i++) {
         const e = el[i];
         const cover = $(e).find('[data-image]').attr('data-image');
@@ -42,7 +45,7 @@ const crawl = {
         });
       }
 
-      return { novelList: novelList, isNext: !!next, current, next };
+      return { novelList: novelList, current, next, isNext: !!next };
     }
 
     return null;
