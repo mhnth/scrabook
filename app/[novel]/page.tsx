@@ -44,11 +44,7 @@ export default async function Page({
               />
             </div>
             <div className="n-details ml-4 flex text-sm leading-8 md:ml-0">
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: novel.details || '<p>mô trả trống</p>',
-                }}
-              />
+              <div dangerouslySetInnerHTML={{ __html: novel.details }} />
             </div>
             <div className="n-toolbar flex justify-center gap-2 text-sm font-semibold md:justify-start">
               <span>

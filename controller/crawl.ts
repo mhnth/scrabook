@@ -80,11 +80,13 @@ const crawl = {
 
     if ($)
       return {
-        name: $('h3.title')?.text(),
-        cover: $('div.book img')?.attr('src'),
-        author: $('div.info div a')?.first().text(),
-        description: $('div.desc-text')?.html(),
-        details: $('div.info').html()?.replaceAll('</h3>', ' '),
+        name: $('h3.title')?.text() || 'name is null',
+        cover: $('div.book img')?.attr('src') || 'cover image is null',
+        author: $('div.info div a')?.first().text() || 'author is null',
+        description: $('div.desc-text')?.html() || 'description is null',
+        details:
+          $('div.info').html()?.replaceAll('</h3>', ' ') ||
+          '[getInfo] details is null',
         ongoing: $('div.info').html()?.indexOf('>Đang ra<')! > 0,
         total_page: $('input#total-page').attr('value'),
         host: 'truyenfull.vn',
@@ -122,6 +124,7 @@ const crawl = {
     if ($) {
       const name = $('a.truyen-title').text();
       const chap = $('span[itemprop=name]').last().text();
+      const chapterTitle = $('.chapter-title').text();
 
       $('noscript')?.remove();
       $('script')?.remove();
@@ -133,11 +136,13 @@ const crawl = {
 
       let txt = $('div.chapter-c');
       // txt.find('p').last().remove();
-      let text = txt
-        .html()
-        ?.replace('<em>.*?Chương này có nội dung ảnh.*?</em>', '</?em>');
+      let text =
+        txt
+          .html()
+          ?.replace('<em>.*?Chương này có nội dung ảnh.*?</em>', '</?em>') ||
+        'chap text is null';
 
-      return { text, name, chap };
+      return { text, name, chap, chapterTitle };
     }
 
     return null;
