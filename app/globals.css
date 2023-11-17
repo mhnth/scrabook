@@ -61,7 +61,7 @@ input {
   .n-info {
     grid-template-columns: auto 1fr;
     grid-template-rows: auto auto 1fr;
-    gap: 32px;
+    gap: 16px;
     grid-template-areas: 'cov name' 'cov details' 'cov toolbar';
   }
 }

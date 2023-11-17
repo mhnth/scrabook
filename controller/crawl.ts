@@ -125,9 +125,13 @@ const crawl = {
     const $ = await this._getDoc(url);
 
     if ($) {
-      const name = $('a.truyen-title').text();
-      const chap = $('span[itemprop=name]').last().text();
+      const novelName = $('a.truyen-title').text();
+      // const chap = $('span[itemprop=name]').last().text();
       const chapterTitle = $('.chapter-title').text();
+      const prevChap = $('.btn-group #prev_chap').attr('href')?.slice(22);
+      const nextChap = $('.btn-group #next_chap').attr('href')?.slice(22);
+
+      console.log('chap', prevChap, nextChap);
 
       $('noscript')?.remove();
       $('script')?.remove();
@@ -145,7 +149,7 @@ const crawl = {
           ?.replace('<em>.*?Chương này có nội dung ảnh.*?</em>', '</?em>') ||
         'chap text is null';
 
-      return { text, name, chap, chapterTitle };
+      return { text, novelName, chapterTitle, prevChap, nextChap };
     }
 
     return null;

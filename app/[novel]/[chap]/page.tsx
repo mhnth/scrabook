@@ -13,15 +13,14 @@ export default async function Page({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const data = await crawl.getChap(params.novel + '/' + params.chap);
-  const chap = params.chap.split('-').slice(-1) as unknown as string;
+  // const chap = params.chap.split('-').slice(-1) as unknown as string;
 
-  if (data)
+  if (data) {
+    const { chapterTitle, nextChap, novelName, prevChap, text } = data;
     return (
       <div className="chap-c page-w mx-auto px-2">
         <div className="mt-8 flex flex-col items-center gap-3 text-sm font-semibold text-blue-900 dark:text-slate-300 md:mt-12">
-          <Link href={'./'}>{data.name}</Link>
-          {/* <ArrowRight /> */}
-          {/* <span className="font-normal ">{'Chương ' + chap}</span> */}
+          <Link href={'./'}>{data.novelName}</Link>
           <span className="text-xl font-light md:text-3xl">
             {data.chapterTitle}
           </span>
@@ -29,57 +28,52 @@ export default async function Page({
         <div className="mt-8 flex justify-center gap-2">
           <Link
             className={cx(
-              chap == '1' && 'pointer-events-none opacity-50',
+              !prevChap && 'pointer-events-none opacity-50',
               'rounded-sm border border-slate-400 px-2 py-[2px]',
             )}
-            href={params.chap.replace(
-              'chuong-' + chap,
-              'chuong-' + (+chap - 1),
-            )}
+            href={'/' + prevChap!}
           >
             <ArrowLeft className="fill-slate-200" />
           </Link>
           <Link
             className={cx(
-              chap == '' && 'pointer-events-none opacity-50',
+              !nextChap && 'pointer-events-none opacity-50',
               'rounded-sm border border-slate-400 px-2 py-[2px]',
             )}
-            href={params.chap.replace(
-              'chuong-' + chap,
-              'chuong-' + (+chap + 1),
-            )}
+            href={'/' + nextChap!}
           >
             <ArrowRight className="fill-slate-200" />
           </Link>
         </div>
 
         <div
-          className="mx-auto mt-4 max-w-2xl leading-8 md:text-lg md:leading-10"
+          className="mx-auto mt-10 max-w-2xl leading-8 md:mt-16 md:text-lg md:leading-10"
           dangerouslySetInnerHTML={{ __html: data.text! }}
         />
 
         <div className="mt-8 flex justify-center gap-2">
           <Link
             className={cx(
-              chap == '1' && 'pointer-events-none opacity-50',
+              !prevChap && 'pointer-events-none opacity-50',
               'rounded-sm border border-slate-400 px-2 py-[2px]',
             )}
-            href={'chuong-' + (+chap - 1)}
+            href={'/' + prevChap!}
           >
             <ArrowLeft className="fill-slate-200" />
           </Link>
           <Link
             className={cx(
-              chap == '55' && 'pointer-events-none opacity-50',
+              !nextChap && 'pointer-events-none opacity-50',
               'rounded-sm border border-slate-400 px-2 py-[2px]',
             )}
-            href={'chuong-' + (+chap + 1)}
+            href={'/' + nextChap!}
           >
             <ArrowRight className="fill-slate-200" />
           </Link>
         </div>
       </div>
     );
+  }
 
   return <NullPage />;
 }

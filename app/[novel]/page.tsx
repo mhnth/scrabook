@@ -38,7 +38,7 @@ export default async function Page({
             <div className="n-cover">
               <img
                 loading="lazy"
-                className="rounded-md"
+                className="rounded-md md:w-36"
                 src={novel.cover}
                 alt=""
               />
