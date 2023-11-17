@@ -27,8 +27,7 @@ export default async function Page({
                 href={`/${o.input}`}
                 key={i}
               >
-                {' '}
-                {o.title}{' '}
+                {o.title}
               </Link>
             );
           })}

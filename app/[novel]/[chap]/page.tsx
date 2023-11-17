@@ -21,7 +21,7 @@ export default async function Page({
       <div className="chap-c page-w mx-auto px-2">
         <div className="mt-8 flex flex-col items-center gap-3 text-sm font-semibold text-blue-900 dark:text-slate-300 md:mt-12">
           <Link href={'./'}>{data.novelName}</Link>
-          <span className="text-xl font-light md:text-3xl">
+          <span className="text-center text-xl font-light md:text-3xl">
             {data.chapterTitle}
           </span>
         </div>
@@ -47,7 +47,7 @@ export default async function Page({
         </div>
 
         <div
-          className="mx-auto mt-10 max-w-2xl leading-8 md:mt-16 md:text-lg md:leading-10"
+          className="mx-auto mt-10 max-w-2xl leading-9 md:mt-16 md:text-lg md:leading-10"
           dangerouslySetInnerHTML={{ __html: data.text! }}
         />
 

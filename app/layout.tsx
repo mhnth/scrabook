@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Navbar from '@/components/navbar';
 
+export const runtime = 'edge';
+
 export const metadata: Metadata = {
   title: 'Scrabook',
   description: 'Web cào truyện về đọc ^^',
