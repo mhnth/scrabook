@@ -4,12 +4,34 @@ import crawl from '@/controller/crawl';
 import { cx } from '@/lib/utils';
 import Link from 'next/link';
 import { cache } from 'react';
+import type { Metadata, ResolvingMetadata } from 'next';
 
 const getInfo = cache(async (path: string) => {
   const info = await crawl.getInfo(path);
 
   return info;
 });
+
+type Props = {
+  params: { novel: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  // fetch data
+  const novel = await getInfo(params.novel)!;
+
+  return {
+    title: novel?.name,
+    openGraph: {
+      // images: ['/some-specific-page-image.jpg', ...previousImages],
+      description: `${novel?.name} - scrabook`,
+    },
+  };
+}
 
 export default async function Page({
   params,

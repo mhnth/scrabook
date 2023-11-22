@@ -1,9 +1,4 @@
-import Image from 'next/image';
-import { home } from '../constants/home';
-import crawl from '@/controller/crawl';
-import Link from 'next/link';
 import NullPage from '@/components/null-page';
-import Pagination from '@/components/pagination';
 import { redirect } from 'next/navigation';
 
 export default async function Home({

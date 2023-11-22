@@ -4,6 +4,8 @@ import NullPage from '@/components/null-page';
 import crawl from '@/controller/crawl';
 import { cx } from '@/lib/utils';
 import Link from 'next/link';
+import type { Metadata, ResolvingMetadata } from 'next';
+import { cache } from 'react';
 
 export default async function Page({
   params,
@@ -76,4 +78,33 @@ export default async function Page({
   }
 
   return <NullPage />;
+}
+
+const getInfo = cache(async (path: string) => {
+  const info = await crawl.getInfo(path);
+
+  return info;
+});
+
+type Props = {
+  params: { novel: string; chap: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const [novel, chapData] = await Promise.all([
+    getInfo(params.novel),
+    crawl.getChap(params.novel + '/' + params.chap),
+  ]);
+
+  return {
+    title: novel?.name! + '-' + chapData?.chapterTitle,
+    openGraph: {
+      // images: ['/some-specific-page-image.jpg', ...previousImages],
+      description: `novel?.name! + '-' + chapData?.chapterTitle`,
+    },
+  };
 }
