@@ -47,8 +47,8 @@ export const home = [
     title: 'Đam Mỹ H Văn',
     input: 'danh-sach/dam-my-h-van/',
   },
-  // {
-  //   title: 'Đam Mỹ Sắc',
-  //   input: 'danh-sach/dam-my-sac/',
-  // },
+  {
+    title: 'Đam Mỹ Sắc',
+    input: 'danh-sach/dam-my-sac/',
+  },
 ];

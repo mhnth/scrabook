@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
-import './globals.css';
+import './../styles/globals.css';
 import Navbar from '@/components/navbar';
+import RootLayoutClient from './layout.client';
+import Provider from '@/components/session-provider';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 export const metadata: Metadata = {
   title: 'Scrabook',
@@ -17,13 +19,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div id="scrab-app">
-          <header className="sticky top-0 z-10 w-full bg-sky-900 px-2 dark:bg-[#252c33]">
-            <Navbar />
-          </header>
-          {children}
-        </div>
-        <footer className="mt-8"></footer>
+        <Provider>
+          <div id="scrab-app">
+            <header className="sticky top-0 z-10 w-full bg-sky-900 px-2 dark:bg-[#252c33]">
+              <Navbar />
+            </header>
+            {children}
+          </div>
+          <footer className="mt-8"></footer>
+        </Provider>
       </body>
     </html>
   );

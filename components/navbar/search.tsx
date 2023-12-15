@@ -7,7 +7,6 @@ export default function Search({
   setOpenSearchBar, // openSearchBar,
 }: {
   setOpenSearchBar: Dispatch<SetStateAction<boolean>>;
-  // openSearchBar: boolean;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -45,7 +44,8 @@ export default function Search({
     <form
       ref={searchRef}
       onSubmit={onSubmit}
-      className="w-max-[550px] absolute -bottom-12 right-0 w-3/5 rounded-md p-1 dark:bg-slate-700 lg:w-80 xl:w-full"
+      className="w-max-[550px] absolute -bottom-12 right-0 w-3/5 rounded-md p-1
+      dark:bg-slate-700 lg:w-80 xl:w-full"
     >
       <input
         key={searchParams?.get('q')}
@@ -54,7 +54,9 @@ export default function Search({
         placeholder="Tìm kiếm truyện/tác giả"
         autoComplete="off"
         defaultValue={searchParams?.get('q') || ''}
-        className="w-full rounded-lg border bg-white px-4 py-2 text-sm text-black placeholder:text-neutral-500 dark:border-neutral-800 dark:bg-slate-800 dark:text-white dark:placeholder:text-neutral-400"
+        className="w-full rounded-lg border bg-white px-4 py-2 text-sm text-black
+        placeholder:text-neutral-500 dark:border-neutral-800 dark:bg-slate-800 
+        dark:text-white dark:placeholder:text-neutral-400"
       />
     </form>
   );

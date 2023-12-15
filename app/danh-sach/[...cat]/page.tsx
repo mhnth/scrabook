@@ -23,7 +23,11 @@ export default async function Page({
           {home.map((o, i) => {
             return (
               <Link
-                className="item-cat w-max rounded-md bg-cyan-700 px-2 py-1 text-xs font-semibold text-[#f0f0f0] dark:bg-slate-700"
+                className="item-cat 
+                w-max rounded-md 
+                bg-cyan-700 
+                px-2 py-1 text-xs font-semibold 
+                text-[#f0f0f0] dark:bg-slate-700"
                 href={`/${o.input}`}
                 key={i}
               >

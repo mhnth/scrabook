@@ -65,10 +65,13 @@ export default async function Page({
                 alt=""
               />
             </div>
-            <div className="n-details ml-4 flex text-sm leading-8 md:ml-0">
+            <div className="n-details ml-2 text-sm leading-6 md:ml-0 md:leading-8">
               <div dangerouslySetInnerHTML={{ __html: novel.details }} />
             </div>
-            <div className="n-toolbar flex justify-center gap-2 text-sm font-semibold md:justify-start">
+            <div
+              className="n-toolbar flex justify-center gap-2 self-end 
+              text-sm font-semibold md:justify-start"
+            >
               <span>
                 <a href="#">Đọc ngay</a>
               </span>
@@ -102,7 +105,8 @@ export default async function Page({
                     return (
                       <li
                         key={y}
-                        className="border-b pb-2 pt-2 text-gray-700 dark:border-slate-700 dark:font-light dark:text-gray-300"
+                        className="border-b pb-2 pt-2 text-gray-700 dark:border-slate-700 
+                        dark:font-light dark:text-gray-300"
                       >
                         <Link className="" href={`${c.input}`}>
                           {c.name}

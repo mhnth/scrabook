@@ -1,5 +1,9 @@
 @import 'tailwindcss/base';
+@import './_base.css';
+
 @import 'tailwindcss/components';
+@import './form.css';
+
 @import 'tailwindcss/utilities';
 
 @layer base {
@@ -7,6 +11,9 @@
   input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+  }
+  img[loading='lazy'] {
+    clip-path: inset(0.6px);
   }
 }
 
@@ -21,12 +28,6 @@
   :root {
     --foreground: #b6babf;
     --background-color: #252c33;
-  }
-}
-
-@supports (font: -apple-system-body) and (-webkit-appearance: none) {
-  img[loading='lazy'] {
-    clip-path: inset(0.6px);
   }
 }
 
@@ -57,15 +58,6 @@ input {
   grid-template-areas: 'name name' 'cov details' 'toolbar toolbar';
 }
 
-@media (min-width: 768px) {
-  .n-info {
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto auto 1fr;
-    gap: 16px;
-    grid-template-areas: 'cov name' 'cov details' 'cov toolbar';
-  }
-}
-
 .n-name {
   grid-area: name;
 }
@@ -80,6 +72,20 @@ input {
 
 .n-toolbar {
   grid-area: toolbar;
+  margin-top: 12px;
+}
+
+@media (min-width: 768px) {
+  .n-info {
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto 1fr;
+    gap: 16px;
+    grid-template-areas: 'cov name' 'cov details' 'cov toolbar';
+  }
+
+  .n-toolbar {
+    margin-top: 0px;
+  }
 }
 
 .item-cat {

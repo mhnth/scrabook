@@ -38,7 +38,10 @@ export default function Pagination({
   }, [current]);
 
   return (
-    <div className="fixed bottom-0 flex h-max w-full justify-center bg-opacity-20 from-gray-600  to-gray-50 py-3 dark:bg-[#252c33]">
+    <div
+      className="fixed bottom-0 flex h-max w-full justify-center 
+      bg-opacity-20 from-gray-600  to-gray-50 py-3 dark:bg-[#252c33]"
+    >
       <div className="flex h-6 w-max items-center gap-2">
         <Link
           className={cx(
@@ -56,7 +59,8 @@ export default function Pagination({
           onSubmit={(e) => handleSubmit(e)}
         >
           <input
-            className="flex h-full w-full justify-center rounded-md bg-[#f0f0f0] text-center dark:text-gray-800"
+            className="flex h-full w-full justify-center rounded-md bg-[#f0f0f0] 
+            text-center dark:text-gray-800"
             type="number"
             name=""
             id=""
