@@ -1,8 +1,9 @@
 'use client';
 
-import { UIProvider } from '@/components/useUI';
+import { UIProvider, useUI } from '@/components/useUI';
 import '../styles/globals.css';
-import Navbar from '@/components/navbar';
+import { Modal, ModalUI } from '@/components/modal';
+import { RightSideBar } from '@/components/navbar/right-sidebar';
 
 export default function RootLayoutClient({
   children,
@@ -11,17 +12,8 @@ export default function RootLayoutClient({
 }) {
   return (
     <UIProvider>
-      <html lang="en">
-        <body>
-          <div id="scrab-app">
-            <header className="sticky top-0 z-10 w-full bg-sky-900 px-2 dark:bg-[#252c33]">
-              <Navbar />
-            </header>
-            {children}
-          </div>
-          <footer className="mt-8"></footer>
-        </body>
-      </html>
+      <ModalUI />
+      {children}
     </UIProvider>
   );
 }

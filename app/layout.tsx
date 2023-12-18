@@ -18,16 +18,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <Provider>
-          <div id="scrab-app">
-            <header className="sticky top-0 z-10 w-full bg-sky-900 px-2 dark:bg-[#252c33]">
-              <Navbar />
-            </header>
-            {children}
-          </div>
-          <footer className="mt-8"></footer>
-        </Provider>
+      <body suppressHydrationWarning={true}>
+        <RootLayoutClient>
+          <Provider>
+            <div id="_next">
+              <header className="sticky top-0 z-10 w-full bg-sky-900 px-2 dark:bg-[#252c33]">
+                <Navbar />
+              </header>
+              {children}
+            </div>
+          </Provider>
+        </RootLayoutClient>
       </body>
     </html>
   );

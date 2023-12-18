@@ -4,6 +4,8 @@ import NextAuth, { NextAuthOptions, RequestInternal } from 'next-auth';
 import bcrypt from 'bcryptjs';
 import Credentials from 'next-auth/providers/credentials';
 import env from '@/config/env';
+import { User } from '@prisma/client';
+import { AdapterUser } from 'next-auth/adapters';
 
 export const Options: NextAuthOptions = {
   secret: env.nextAuthSecret,
@@ -24,8 +26,6 @@ export const Options: NextAuthOptions = {
         credentials: Record<string, string> | undefined,
         req: Pick<RequestInternal, 'body' | 'query' | 'headers' | 'method'>,
       ) {
-        console.log('authorize');
-
         if (!credentials?.email || !credentials.password) {
           throw new Error('Invalid credentials');
         }
@@ -49,7 +49,7 @@ export const Options: NextAuthOptions = {
         }
         const { password, ...userWithoutPwd } = user;
 
-        console.log('success user, user', userWithoutPwd);
+        console.log('AUTH AUTHORIZE: \n', userWithoutPwd);
 
         return userWithoutPwd;
       },
@@ -61,23 +61,41 @@ export const Options: NextAuthOptions = {
   },
   callbacks: {
     session: async ({ session, token, user }) => {
-      if (session?.user) {
-        session.user.name = token.email;
+      if (session.user) {
+        session.user.image = token.picture;
       }
-      console.log('next auth session', session, 'token', token, 'user', user);
+      console.log(
+        'AUTH CALLBACK SESSION:',
+        '\nsession: \n',
+        session,
+        'token: \n',
+        token,
+        '\nuser: \n',
+        user,
+      );
 
       return session;
     },
     jwt: async ({ user, token }) => {
+      console.log(
+        'AUTH CALLBACK JWT:',
+        '\n token: \n',
+        token,
+        '\n user: \n',
+        user,
+      );
+      const user1 = user as User;
+
       if (user) {
         token.uid = user.id;
+        token.picture = user1.picture;
       }
       return token;
     },
   },
   session: {
     strategy: 'jwt',
-    maxAge: 30,
+    maxAge: 1000 * 60 * 60 * 24 * 30 * 12, // 1 year
   },
 };
 

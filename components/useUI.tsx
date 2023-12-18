@@ -1,21 +1,72 @@
 'use client';
 
-import React, { ReactNode, useContext, useState } from 'react';
+import React, { ReactNode, useContext, useReducer } from 'react';
 
 interface State {
-  openSearch: boolean;
+  displayModal: boolean;
+  modalView: string;
 }
+
+const initialState = {
+  displayModal: false,
+  modalView: 'Right',
+};
+
+type MODAL_VIEWS = 'Right' | 'Left' | 'Center';
+
+type Action =
+  | {
+      type: 'OPEN_MODAL';
+    }
+  | {
+      type: 'CLOSE_MODAL';
+    }
+  | {
+      type: 'SET_MODAL_VIEW';
+      view: MODAL_VIEWS;
+    };
 
 const UIContext = React.createContext<State | any>(false);
 
+const uiReducer = (state: State, action: Action) => {
+  switch (action.type) {
+    case 'OPEN_MODAL': {
+      return {
+        ...state,
+        displayModal: true,
+      };
+    }
+    case 'CLOSE_MODAL': {
+      return {
+        ...state,
+        displayModal: false,
+      };
+    }
+    case 'SET_MODAL_VIEW': {
+      return {
+        ...state,
+        modalViews: action.view,
+      };
+    }
+  }
+};
+
 export const UIProvider: React.FC<{ children?: ReactNode }> = (props) => {
-  const [isOpenSearch, setIsOpenSearch] = useState(false);
+  const [state, dispatch] = useReducer(uiReducer, initialState);
+
+  const openModal = () => dispatch({ type: 'OPEN_MODAL' });
+
+  const closeModal = () => dispatch({ type: 'CLOSE_MODAL' });
+
+  const setModalView = (view: MODAL_VIEWS) =>
+    dispatch({ type: 'SET_MODAL_VIEW', view: view });
 
   const value = {
-    isOpenSearch,
-    setIsOpenSearch,
+    ...state,
+    openModal,
+    closeModal,
+    setModalView,
   };
-
   return <UIContext.Provider value={value} {...props} />;
 };
 
